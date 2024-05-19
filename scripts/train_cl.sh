@@ -1,0 +1,2 @@
+CUDA_VISIBLE_DEVICES=0,1,2 python -m torch.distributed.launch --nproc_per_node=3 train_cl_fuse.py --model_name fuse_256_pretrain_split100 --model_dir ./results/fuse --batch_size 36 --num_workers 24 -t split100 -v split100 --device cuda:0 --adaptive_rate 50\
+    --data_dir  ./CLEAN --epoch 2000
