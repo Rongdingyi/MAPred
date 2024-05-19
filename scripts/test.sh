@@ -1,0 +1,2 @@
+python test_classification.py --model_path ./data/model/split100_train_split_2_valid.pth ./data/model/split100_train_split_0_valid.pth\
+    --data_dir ./data/new -t new -c ./results/metric_result/squence_3di_coefficient_triplet_bce_5574_new_4.csv --ensamble_number 1
