@@ -68,12 +68,12 @@ def format_esm(a):
     return a
 
 
-def load_esm(lookup, esm_dir="/state/partition/wzzheng/clean/data/train_valid_split/split100/esm_data"):
+def load_esm(lookup, esm_dir="./esm_data"):
     esm = format_esm(torch.load(os.path.join(esm_dir, lookup + ".pt")))
     return esm.unsqueeze(0)
 
 
-def esm_embedding(ec_id_dict, device, dtype, esm_dir="/state/partition/wzzheng/clean/data/train_valid_split/split100/esm_data"):
+def esm_embedding(ec_id_dict, device, dtype, esm_dir="./esm_data"):
     '''
     Loading esm embedding in the sequence of EC numbers
     prepare for calculating cluster center by EC
@@ -87,19 +87,7 @@ def esm_embedding(ec_id_dict, device, dtype, esm_dir="/state/partition/wzzheng/c
     return torch.cat(esm_emb).to(device=device, dtype=dtype)
 
 
-# def model_embedding_test(id_ec_test, model, device, dtype, esm_dir="/state/partition/wzzheng/clean/data/train_valid_split/split100/esm_data"):
-#     '''
-#     Instead of loading esm embedding in the sequence of EC numbers
-#     the test embedding is loaded in the sequence of queries
-#     then inferenced with model to get model embedding
-#     '''
-#     ids_for_query = list(id_ec_test.keys())
-#     esm_to_cat = [load_esm(id, esm_dir=esm_dir) for id in ids_for_query]
-#     esm_emb = torch.cat(esm_to_cat).to(device=device, dtype=dtype)
-#     model_emb = model(esm_emb)
-#     return model_emb
-
-def model_embedding_test_ensemble(id_ec_test, device, dtype, esm_dir="/state/partition/wzzheng/clean/data/train_valid_split/split100/esm_data"):
+def model_embedding_test_ensemble(id_ec_test, device, dtype, esm_dir="./esm_data"):
     '''
     Instead of loading esm embedding in the sequence of EC numbers
     the test embedding is loaded in the sequence of queries
@@ -122,11 +110,11 @@ def ensure_dirs(path):
     if not os.path.exists(path):
         os.makedirs(path)
         
-def retrive_esm1b_embedding(fasta_name="/state/partition/wzzheng/clean/data/train_valid_split/split100/split100", 
-                            output_dir="/state/partition/wzzheng/clean/data/train_valid_split/split100/esm_data"):
+def retrive_esm1b_embedding(fasta_name="./split100", 
+                            output_dir="./esm_data"):
     print("Retriving ESM1b embedding for ", fasta_name + '.fasta')
     esm_script = "esm/scripts/extract.py"
-    esm_type = "/state/partition/wzzheng/clean/esm/esm1b_t33_650M_UR50S.pt"
+    esm_type = "./esm/esm1b_t33_650M_UR50S.pt"
     command = ["python", esm_script, esm_type, 
               fasta_name + '.fasta', output_dir, "--include", "mean"]
     subprocess.run(command)
@@ -143,7 +131,7 @@ def compute_esm_distance(train_file, data_dir = "./data"):
     pickle.dump(esm_dist, open(os.path.join(data_dir, "distance_map", train_file + '_esm.pkl'), 'wb'))
     pickle.dump(esm_emb, open(os.path.join(data_dir, "distance_map", train_file + '_esm_emb.pkl'), 'wb'))
     
-def prepare_infer_fasta(fasta_name="/state/partition/wzzheng/clean/data/train_valid_split/split100/split100"):
+def prepare_infer_fasta(fasta_name="./split100"):
     retrive_esm1b_embedding(fasta_name)
     csvfile = open(fasta_name + '.csv', 'r')
     csvwriter = csv.writer(csvfile, delimiter = '\t')
@@ -185,7 +173,7 @@ def random_shuffling(sequence: str) -> str:
     new_sequence = start + ''.join(middle) + end
     return new_sequence
 
-def mask_sequences(ids, csv_name, fasta_name, data_dir = "/state/partition/wzzheng/clean/data/train_valid_split/split100") :
+def mask_sequences(ids, csv_name, fasta_name, data_dir = "./split100") :
     single_id, second_id, third_id, fourth_id, fifth_id = ids[0], ids[1], ids[2], ids[3], ids[4]
     csv_file = open(os.path.join(data_dir, csv_name + '.csv'))
     csvreader = csv.reader(csv_file, delimiter = '\t')
@@ -214,7 +202,7 @@ def mask_sequences(ids, csv_name, fasta_name, data_dir = "/state/partition/wzzhe
                     output_fasta.write('>' + rows[0] + '_' + str(k) + '\n')
                     output_fasta.write(seq + '\n')
 
-def mutate_single_seq_ECs(train_file, data_dir = "/state/partition/wzzheng/clean/data/train_valid_split/split100"):
+def mutate_single_seq_ECs(train_file, data_dir = "./split100"):
     print("Mutating single-seq EC numbers for ", data_dir + '/' + train_file + '.csv')
     id_ec, ec_id =  get_ec_id_dict(os.path.join(data_dir, train_file + '.csv'))
     single_ec, second_ec, third_ec, fourth_ec, fifth_ec = set(), set(), set(), set(), set()
