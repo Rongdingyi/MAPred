@@ -1,8 +1,19 @@
-# MAPred: Multi-modal Approach for Protein EC Number Prediction
+# Autoregressive Enzyme Function Prediction with Multi-scale Multi-modality Fusion
+
+[![Paper](https://img.shields.io/badge/Paper-Briefings%20in%20Bioinformatics-blue)](https://doi.org/10.1093/bib/bbaf476)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 MAPred is a deep learning-based tool for predicting protein enzyme classification (EC Number), combining protein sequence and structural information to achieve high-precision enzyme function prediction.
 
+> **📖 Paper**: [Autoregressive enzyme function prediction with multi-scale multi-modality fusion](https://doi.org/10.1093/bib/bbaf476) - *Briefings in Bioinformatics*, 2025
 
+## 📄 Publication
+
+**[Autoregressive enzyme function prediction with multi-scale multi-modality fusion](https://doi.org/10.1093/bib/bbaf476)**  
+*Dingyi Rong, Bozitao Zhong, Wenzhuo Zheng, Liang Hong, Ning Liu*  
+*Briefings in Bioinformatics*, Volume 26, Issue 5, 2025  
+DOI: [`10.1093/bib/bbaf476`](https://doi.org/10.1093/bib/bbaf476)
 
 ## 🛠️ Requirements
 
